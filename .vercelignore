@@ -1,0 +1,8 @@
+.history
+.qodo
+docs
+scripts
+*.md
+*.js
+!next.config.ts
+!middleware.ts

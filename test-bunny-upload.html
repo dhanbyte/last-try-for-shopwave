@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Bunny Upload</title>
+</head>
+<body>
+    <h1>Test Vendor Product Image Upload to Bunny.net</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <button onclick="uploadToBunny()">Upload to Bunny.net</button>
+    <div id="result"></div>
+
+    <script>
+        async function uploadToBunny() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('fileName', `test-${Date.now()}-${file.name}`);
+            formData.append('folder', '/vendor-products');
+
+            try {
+                const response = await fetch('/api/bunny/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                document.getElementById('result').innerHTML = `
+                    <h3>Upload Result:</h3>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                    ${result.success ? `<img src="${result.url}" style="max-width: 300px;">` : ''}
+                `;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
