@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(pnpm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(pnpm run build)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
